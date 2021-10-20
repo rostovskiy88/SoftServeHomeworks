@@ -1,0 +1,17 @@
+body {
+  text-align: center;
+}
+
+div.container {
+  border: 1px solid black;
+  width: 100px;
+  margin: auto;
+}
+
+div#app {
+  margin: 15px;
+}
+
+span {
+  color: transparent;
+}
