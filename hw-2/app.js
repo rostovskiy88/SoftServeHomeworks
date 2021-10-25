@@ -66,27 +66,35 @@ Array.prototype.customConcat = function (concatArray) {
 
 // Reduce
 
-let fruits = ['Яблоко', 'Банан', 'Ананас'];
+let fruits = ['Яблоко', 'Банан', 'Ананас', 'Апельсин'];
 
 // map task
 // console.log(fruits.map((el) => el[0]));
-const fruitsMap = fruits.reduce((total, el) => {
-  total.push(el[0]);
-  return total;
+const fruitsMap = fruits.reduce((result, el) => {
+  result.push(el[0]);
+  return result;
 }, []);
 
-console.log(fruitsMap);
+//console.log(fruitsMap);
 
 // filter task
 
-const fruitsFilter = fruits.reduce((total, el) => {
+const fruitsFilter = fruits.reduce((result, el) => {
   if (el[0].toLowerCase() == 'а') {
-    total.push(el);
+    result.push(el);
   }
-  return total;
+  return result;
 }, []);
 //console.log(fruitsFilter);
 
-// forEach task
+//forEach task
+// fruits.forEach((el, i, arr) => (arr[i] = `${i + 1}: ${el};`));
+// console.log(fruits);
 
-// console.log(fruits.forEach((el, i, arr) => (arr[i] = `${i + 1}: ${el};`)));
+fruits.reduce((result, el, i, arr) => {
+  arr[i] = `${i + 1}: ${el};`;
+  result.push(arr[i]);
+  return result;
+}, []);
+
+//console.log(fruits);
