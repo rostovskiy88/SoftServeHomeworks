@@ -7,6 +7,7 @@ function meeting(names) {
   let mappedNames = newNames.map((el) => {
     return el.split(':');
   });
+  console.log(mappedNames);
   let mappedArray;
   let pushed = [];
   for (let i = 0; i < mappedNames.length; i++) {
@@ -15,9 +16,11 @@ function meeting(names) {
       mappedArray[1][0],
       mappedArray[0][0],
     ];
+    console.log(mappedArray);
     pushed.push([...mappedArray[(0, 0)], ...mappedArray[(0, 1)]]);
   }
   pushed.sort();
+  console.log(pushed);
   let result = '';
   for (let i = 0; i < pushed.length; i++) {
     result += `(${pushed[i][0]}, ${pushed[i][1]})`;
