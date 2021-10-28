@@ -1,18 +1,12 @@
 const boardArray = [
   [1, 1, 2], // 0 1 2
-  [2, 1, 1], // 3 4 5
-  [1, 2, 0], // 6 7 8
+  [2, 2, 2], // 3 4 5
+  [1, 2, 1], // 6 7 8
 ];
 
-function check() {
+function check(board) {
   let fl = [];
-  for (let i = 0; i < boardArray.length; i += 1) {
-    const subgroup = boardArray[i];
-    for (let j = 0; j < subgroup.length; j += 1) {
-      const x = subgroup[j];
-      fl.push(x);
-    }
-  }
+  fl = board[0].concat(board[1], board[2]);
 
   // check player 1
   if (fl[0] === 1 && fl[1] === 1 && fl[2] === 1) return 1;
@@ -44,4 +38,4 @@ function check() {
   }
 }
 
-console.log(check());
+console.log(check(boardArray));
