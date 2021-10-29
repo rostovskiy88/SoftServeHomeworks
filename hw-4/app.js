@@ -1,18 +1,33 @@
-function ipsBetween(address1, address2) {
-  const split1 = address1.split('.');
-  const split2 = address2.split('.');
-  let result1 = 0;
-  for (let i = 0; i < split1.length; i++) {
-    result1 += split1[i] * Math.pow(256, 3 - i);
+const boardArray = [
+  [1, 2, 2], // 0 1 2
+  [2, 1, 1], // 3 4 5
+  [1, 2, 1], // 6 7 8
+];
+
+function check(board) {
+  let fl = [];
+  fl = board[0].concat(board[1], board[2]);
+
+  // check player 1 and player 2 win condition
+  for (let i = 1; i <= 2; i++) {
+    if (fl[0] === i && fl[1] === i && fl[2] === i) return i;
+    if (fl[3] === i && fl[4] === i && fl[5] === i) return i;
+    if (fl[6] === i && fl[7] === i && fl[8] === i) return i;
+    if (fl[0] === i && fl[3] === i && fl[6] === i) return i;
+    if (fl[1] === i && fl[4] === i && fl[7] === i) return i;
+    if (fl[2] === i && fl[5] === i && fl[8] === i) return i;
+    if (fl[0] === i && fl[4] === i && fl[8] === i) return i;
+    if (fl[6] === i && fl[4] === i && fl[2] === i) return i;
   }
-  let result2 = 0;
-  for (let i = 0; i < split2.length; i++) {
-    result2 += split2[i] * Math.pow(256, 3 - i);
+
+  // check draw and unfinished game
+
+  for (let i = 0; i < fl.length; i++) {
+    if (!fl[i]) return -1;
   }
-  return result2 - result1;
+  for (let i = 0; i < fl.length; i++) {
+    if (fl[i]) return 0;
+  }
 }
 
-console.log(ipsBetween('10.0.0.0', '10.0.0.50')); // 50
-console.log(ipsBetween('20.0.0.10', '20.0.1.0')); // 246
-console.log(ipsBetween('10.0.0.0', '10.0.1.0')); // 256
-console.log(ipsBetween('0.0.0.0', '255.255.255.255')); // all-1
+console.log(check(boardArray));

@@ -1,33 +1,52 @@
-const boardArray = [
-  [1, 2, 2], // 0 1 2
-  [2, 1, 1], // 3 4 5
-  [1, 2, 1], // 6 7 8
-];
+let EncryptedMessage =
+  'Yesterday, we bumped into Laura. It had to happen, but you cant deny the timing couldn\'t be worse. The "mission" to try and seduce her was a complete failure last month. By the way, she still has the ring I gave her. Anyhow, it hasn\'t been a pleasurable experience to go through it. I wanted to feel done with it first. Yesterda2, we bumped into Laura. It had to happen, but you cant deny the timing couldn\'t be worse. The "mission" to try and seduce her was a complete failure last month. By the way, she still has the ring I gave her. Anyhow, it hasn\'t been a pleasurable experience to go through it. I wanted to feel done with it first. Yesterda3, we bumped into Laura. It had to happen, but you cant deny the timing couldn\'t be worse. The "mission" to try and seduce her was a complete failure last month. By the way, she still has the ring I gave her. Anyhow, it hasn\'t been a pleasurable experience to go through it. I wanted to feel done with it first.';
 
-function check(board) {
-  let fl = [];
-  fl = board[0].concat(board[1], board[2]);
+function decryptMessage(message) {
+  // split into sentences and push to array
+  let sentencesArray = [];
+  sentencesArray = message.match(/[^\.!\?]+[\.!\?]+/g);
+  //console.log(sentencesArray);
+  let allSentences = [];
+  let wordFirstLength = [];
+  let secretMessage = '';
+  let wordCountRest = [];
+  let mymessage;
 
-  // check player 1 and player 2 win condition
-  for (let i = 1; i <= 2; i++) {
-    if (fl[0] === i && fl[1] === i && fl[2] === i) return i;
-    if (fl[3] === i && fl[4] === i && fl[5] === i) return i;
-    if (fl[6] === i && fl[7] === i && fl[8] === i) return i;
-    if (fl[0] === i && fl[3] === i && fl[6] === i) return i;
-    if (fl[1] === i && fl[4] === i && fl[7] === i) return i;
-    if (fl[2] === i && fl[5] === i && fl[8] === i) return i;
-    if (fl[0] === i && fl[4] === i && fl[8] === i) return i;
-    if (fl[6] === i && fl[4] === i && fl[2] === i) return i;
+  for (let i = 0; i < message.length; i++) {
+    //sentencesArray = message.match(/[^\.!\?]+[\.!\?]+/g);
+    for (let i = 0; i < sentencesArray.length; i++) {
+      sentencesArray[i].match(/\b(\w+)\b/g);
+    }
+    allSentences = [];
+    for (let i = 0; i < sentencesArray.length; i++) {
+      allSentences.push(
+        sentencesArray[i].replace(/[.,\/#!%\^&\*;":'\_`()]/g, '').trimLeft()
+      );
+    }
+    // divide fisrt and rest sentences
+    let firstSentence = allSentences[0];
+    if (firstSentence === undefined) return mymessage;
+    console.log(firstSentence); // check if different parts of encrypted message involved
+    allSentences.shift();
+    // count number of words
+    let wordCountFirst = firstSentence.match(/(\w+)/g);
+    wordFirstLength = wordCountFirst.map((el) => el.length);
+    wordCountRest = allSentences.map((el) => el.match(/(\w+)/g));
+    // add words to secret message
+    decrypt();
+    sentencesArray.splice(0, wordFirstLength.length + 1);
   }
-
-  // check draw and unfinished game
-
-  for (let i = 0; i < fl.length; i++) {
-    if (!fl[i]) return -1;
+  function decrypt() {
+    for (let i = 0; i < wordFirstLength.length; i++) {
+      secretMessage += wordCountRest[i][wordFirstLength[i] - 1] + ' ';
+    }
+    mymessage =
+      secretMessage.charAt(0).toUpperCase() +
+      secretMessage.slice(1).trimEnd() +
+      '.';
   }
-  for (let i = 0; i < fl.length; i++) {
-    if (fl[i]) return 0;
-  }
+  return mymessage;
 }
 
-console.log(check(boardArray));
+console.log(decryptMessage(EncryptedMessage));
+// 'The mission has been done.' x3  //result

@@ -1,39 +1,18 @@
-let EncryptedMessage =
-  'Yesterday, we bumped into Laura. It had to happen, but you cant deny the timing couldn\'t be worse. The "mission" to try and seduce her was a complete failure last month. By the way, she still has the ring I gave her. Anyhow, it hasn\'t been a pleasurable experience to go through it. I wanted to feel done with it first.';
-
-function decryptMessage(message) {
-  // split into sentences and push to array
-  let result = message.match(/[^\.!\?]+[\.!\?]+/g);
-  for (let i = 0; i < result.length; i++) {
-    result[i].match(/\b(\w+)\b/g);
+function ipsBetween(address1, address2) {
+  const split1 = address1.split('.');
+  const split2 = address2.split('.');
+  let result1 = 0;
+  for (let i = 0; i < split1.length; i++) {
+    result1 += split1[i] * Math.pow(256, 3 - i);
   }
-  let allSentences = [];
-  for (let i = 0; i < result.length; i++) {
-    allSentences.push(
-      result[i].replace(/[.,\/#!%\^&\*;":'\_`()]/g, '').trimLeft()
-    );
+  let result2 = 0;
+  for (let i = 0; i < split2.length; i++) {
+    result2 += split2[i] * Math.pow(256, 3 - i);
   }
-
-  // divide fisrt and rest sentences
-  let firstSentence = allSentences[0];
-  allSentences.shift();
-
-  // count number of words
-  let wordCountFirst = firstSentence.match(/(\w+)/g);
-  let wordFirstLength = wordCountFirst.map((el) => el.length);
-  let wordCountRest = allSentences.map((el) => el.match(/(\w+)/g));
-
-  // add words to secret message
-  let secretMessage = '';
-  for (let i = 0; i < wordFirstLength.length; i++) {
-    secretMessage += wordCountRest[i][wordFirstLength[i] - 1] + ' ';
-  }
-  return (
-    secretMessage.charAt(0).toUpperCase() +
-    secretMessage.slice(1).trimEnd() +
-    '.'
-  );
+  return result2 - result1;
 }
 
-console.log(decryptMessage(EncryptedMessage));
-// 'The mission has been done.'  //result
+console.log(ipsBetween('10.0.0.0', '10.0.0.50')); // 50
+console.log(ipsBetween('20.0.0.10', '20.0.1.0')); // 246
+console.log(ipsBetween('10.0.0.0', '10.0.1.0')); // 256
+console.log(ipsBetween('0.0.0.0', '255.255.255.255')); // all-1
