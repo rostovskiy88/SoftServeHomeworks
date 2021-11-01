@@ -1,5 +1,5 @@
 const app = {
-  key: 'f20b155e85fa88963c7bb356b08bcd3b', //openweathermap.org APPID
+  key: '80a466d15d019f2b76bc5d87f144c4cb', //openweathermap.org APPID
   init: () => {
     document
       .getElementById('btnGet')
